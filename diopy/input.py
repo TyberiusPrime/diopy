@@ -48,14 +48,8 @@ def read_h5(file: Union[str, None] = None,
     """
     if file is None:
         raise OSError('No such file or directory')
-    h5 = h5py.File(name=file, mode='r')
-    try:
-        adata = h5_to_adata(h5=h5, assay_name=assay_name)
-    except Exception as e:
-        print('Error:', e)
-    finally:
-        h5.close()
-    return adata
+    with h5py.File(name=file, mode='r') as h5:
+        return h5_to_adata(h5=h5, assay_name=assay_name)
 
 ### h5 file convert to the matrix 
 def h5_to_matrix(h5mat: [h5py.Group, h5py.File]

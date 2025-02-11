@@ -62,15 +62,9 @@ def write_h5(adata: anndata.AnnData,
     if not isinstance(adata, anndata.AnnData):
         raise TypeError("object '%s' class is not anndata.AnnData object" % namestr(adata, globals())[0])
     # w Create file, truncate if exists
-    h5 = h5py.File(name=file, mode="w")
-    try:
+    with h5py.File(name=file, mode="w") as h5:
         adata_to_h5(adata=adata, h5=h5,assay_name=assay_name,save_X=save_X,save_graph=save_graph)
         h5.attrs['assay_name'] = np.array([assay_name], dtype=h5py.special_dtype(vlen=str))
-    except Exception as e:
-        print('Error:', e)
-    finally:
-        h5.close()
-    return
 
 
 ### adata convert to the h5 file 
@@ -248,7 +242,6 @@ def df_to_h5(df: pd.DataFrame,
     if len(cate_dict.keys())>0:
         h5df_cate = h5df.create_group('category')
         for ca in cate_dict.keys():
-            h5df_cate.create_dataset(names=ca, data=cate_dict[ca])
             h5df_cate.create_dataset( name=ca, data=cate_dict[ca])
     return 
 #     if gr_name not in h5.keys():
