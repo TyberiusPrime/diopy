@@ -23,8 +23,6 @@ from typing import Union
 import re
 import os
 
-from scipy.sparse.sputils import matrix
-
 ### adata write the h5 file
 def write_h5(adata: anndata.AnnData,
              file: Union[str, None] = None,
