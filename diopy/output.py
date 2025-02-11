@@ -249,6 +249,7 @@ def df_to_h5(df: pd.DataFrame,
         h5df_cate = h5df.create_group('category')
         for ca in cate_dict.keys():
             h5df_cate.create_dataset(names=ca, data=cate_dict[ca])
+            h5df_cate.create_dataset( name=ca, data=cate_dict[ca])
     return 
 #     if gr_name not in h5.keys():
 #         h5df = h5.create_group(gr_name)
