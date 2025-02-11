@@ -171,7 +171,7 @@ def adata_to_h5(adata: anndata.AnnData,
     for c in adata.uns_keys():
         if 'colors' in c:
             # uns.create_dataset(c, data=adata.uns[c])
-            uns.create_dataset(c,data=np.array(adata.uns[c]).astype(np.object))
+            uns.create_dataset(c,data=np.array(adata.uns[c]).astype(object))
     # save the layers for the some data type, this dim is same as the X, and the varm gene same as the X
     if save_X:
         if len(adata.layers.keys())>0: 
@@ -231,7 +231,7 @@ def df_to_h5(df: pd.DataFrame,
                 cate_dict[k] = df[k].cat.categories.values
             if np.issubdtype(cate_dtype, np.floating):
                 cate_dict[k] = df[k].cat.categories.values
-            if np.issubdtype(cate_dtype, np.object):
+            if np.issubdtype(cate_dtype, object):
                 cate_dict[k] = df[k].cat.categories.values.astype(h5py.special_dtype(vlen=str))
         if is_object_dtype(df[k]):
             str_to_cate = pd.Categorical(df[k].astype('str'))
@@ -269,7 +269,7 @@ def df_to_h5(df: pd.DataFrame,
 #                 h5df.create_dataset(name=k+'_levels', data=df[k].cat.categories.values)
 #             if np.issubdtype(cate_dtype, np.floating):
 #                 h5df.create_dataset(name=k+'_levels', data=df[k].cat.categories.values)
-#             if np.issubdtype(cate_dtype, np.object):
+#             if np.issubdtype(cate_dtype, object):
 #                 h5df.create_dataset(name=k+'_levels', data=df[k].cat.categories.values.astype(h5py.special_dtype(vlen=str)))
 #         if is_object_dtype(df[k]):
 #             str_to_cate = pd.Categorical(df[k].astype('str'))
